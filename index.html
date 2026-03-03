@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turbokotiki — Web & DevOps команда</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+html{scroll-behavior:smooth}
+
+body{
+    background:
+        radial-gradient(circle at 20% 20%, #1e293b 0%, transparent 40%),
+        radial-gradient(circle at 80% 0%, #0ea5e9 0%, transparent 35%),
+        #0b1220;
+    color:#e5e7eb;
+    line-height:1.6;
+}
+
+.container{width:90%;max-width:1200px;margin:auto}
+
+/* ===== HEADER ===== */
+header{
+    position:sticky;
+    top:0;
+    backdrop-filter:blur(14px);
+    background:rgba(11,18,32,.6);
+    border-bottom:1px solid rgba(255,255,255,.06);
+    z-index:100;
+}
+
+.nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 0;
+}
+
+.logo{display:flex;align-items:center;gap:10px;font-weight:700}
+.logo img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.menu{display:flex;gap:26px;align-items:center}
+.menu a{color:#cbd5e1;text-decoration:none}
+.menu a:hover{color:#60a5fa}
+
+.btn{
+    background:linear-gradient(135deg,#3b82f6,#06b6d4);
+    padding:10px 18px;
+    border-radius:12px;
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    box-shadow:0 0 20px rgba(59,130,246,.4);
+    transition:.25s;
+}
+.btn:hover{transform:translateY(-2px) scale(1.03)}
+
+.burger{display:none;font-size:26px;cursor:pointer}
+
+/* ===== HERO ===== */
+.hero{padding:50px 0;text-align:center}
+.hero-box{
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(20px);
+    padding:60px 30px;
+    border-radius:24px;
+}
+.hero h1{font-size:46px;margin-bottom:16px}
+.hero p{color:#94a3b8;max-width:700px;margin:0 auto}
+
+/* ===== SECTIONS ===== */
+section{padding:50px 0}
+.section-title{text-align:center;font-size:34px;margin-bottom:50px}
+
+.big-cat-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+    z-index: 1;
+}
+
+.big-cat {
+    max-width: 80%;
+    height: auto;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(40px);transition:.8s}
+.reveal.active{opacity:1;transform:none}
+
+.about-box {
+  background: #1118275c;
+  padding: 40px 30px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-box p {
+  color: #94a3b8;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+/* grid */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:24px;
+}
+
+.card{
+    background:#111827;
+    padding:24px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.05);
+    transition:.3s;
+}
+.card:hover{
+    transform:translateY(-8px);
+    border-color:#3b82f6;
+    box-shadow:0 10px 30px rgba(59,130,246,.2);
+}
+
+/* ===== TECH ===== */
+.tech{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.tech span{
+    background:#1f2937;
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:14px;
+}
+
+/* ===== PORTFOLIO GRID ===== */
+.slider {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    gap: 24px;
+}
+
+.project{
+    background:#111827;
+    border-radius:16px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:.3s;
+    width: 500px;
+    flex-shrink: 0; 
+    box-sizing: border-box;
+}
+.project:hover{
+    transform:translateY(-6px) scale(1.02);
+}
+
+.project img {
+    display: block;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    margin: 0;
+    padding: 0;
+}
+.project-content{padding:16px}
+
+/* ===== RESPONSIVE PORTFOLIO ===== */
+@media (max-width: 1024px) {
+    .project {
+        width: 45%;
+    }
+
+    .project img {
+        height: 220px;
+    }
+}
+
+@media (max-width: 640px) {
+    .slider {
+        gap: 16px;
+        padding: 10px;
+    }
+    
+    .project {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .project img {
+        height: 180px;
+    }
+    
+    .project-content {
+        padding: 12px;
+    }
+    
+    .project-content h3 {
+        font-size: 15px;
+    }
+}
+
+/* ===== TEAM ===== */
+.member{text-align:center}
+.member img{
+    width:120px;height:120px;border-radius:50%;
+    object-fit:cover;margin-bottom:12px;
+}
+
+/* ===== MODAL ===== */
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.92);
+    align-items:center;
+    justify-content:center;
+    z-index:999;
+}
+.modal-img{
+    max-width:90%;
+    max-height:85%;
+    border-radius:12px;
+    transition:.25s;
+}
+.modal-img.zoom{transform:scale(1.4)}
+
+.modal-close{
+    position:absolute;
+    top:25px;right:40px;
+    font-size:40px;color:white;cursor:pointer;
+}
+
+.modal-nav{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:50px;color:white;
+    cursor:pointer;padding:20px;
+}
+.modal-prev{left:20px}
+.modal-next{right:20px}
+
+/* ===== FOOTER ===== */
+footer{background:#060b16;padding:60px 0;margin-top:40px}
+.footer-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:30px;
+}
+.footer-title{font-weight:700;margin-bottom:14px}
+.footer a{display:block;color:#94a3b8;text-decoration:none;margin-bottom:6px}
+.footer a:hover{color:#60a5fa}
+.footer-copyright {
+    margin-top: 40px;
+    text-align: left;
+    padding-bottom: 20px;
+    font-size: 16px;
+    color: white;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+    .menu{
+        position:fixed;
+        top:70px;
+        right:-100%;
+        background:#0b1220;
+        flex-direction:column;
+        padding:20px;
+        width:220px;
+        transition:.3s;
+    }
+    .menu.active{right:20px}
+    .burger{display:block}
+    .hero h1{font-size:32px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="container nav">
+<div class="logo">
+<img src="images/cats.jpg">
+<span>Turbokotiki</span>
+</div>
+
+<nav class="menu" id="menu">
+<a href="#about">О нас</a>
+<a href="#services">Услуги</a>
+<a href="#cases">Кейсы</a>
+<a href="#contacts" class="btn">Заказать проект</a>
+</nav>
+
+<div class="burger" id="burger">☰</div>
+</div>
+</header>
+
+<section class="hero">
+<div class="container">
+<div class="hero-box reveal">
+<h1>Разработка сайтов и DevOps-решений</h1>
+<p>Создаём, поддерживаем и масштабируем веб-проекты под ключ.</p>
+</div>
+</div>
+</section>
+
+<div class="big-cat-wrapper">
+  <img src="images/big-cat.png" alt="Огромный лежачий кот" class="big-cat">
+</div>
+
+<section id="about">
+  <div class="container reveal">
+    <h2 class="section-title">О нас</h2>
+    <div class="about-box">
+      <p>
+        Turbokotiki — команда IT-специалистов. Мы разрабатываем сайты,
+        веб-сервисы и инфраструктуру, участвуем в проектах по кибербезопасности
+        и создаём решения, которые работают стабильно и масштабируются.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+<div class="container reveal">
+<h2 class="section-title">Услуги</h2>
+
+<div class="grid">
+  <div class="card" style="text-align:center">
+    <h3>🌐 Разработка сайтов</h3>
+    <p style="color:#94a3b8">Создаём современные адаптивные сайты и веб-приложения под ключ.</p>
+  </div>
+  <div class="card" style="text-align:center">
+    <h3>⚙️ DevOps и CI/CD</h3>
+    <p style="color:#94a3b8">Docker, CI/CD, Kubernetes, настройка серверов и автоматизация деплоя.</p>
+  </div>
+  <div class="card" style="text-align:center">
+    <h3>🛠 Поддержка проектов</h3>
+    <p style="color:#94a3b8">Сопровождение, мониторинг, оптимизация производительности.</p>
+  </div>
+  <div class="card" style="text-align:center">
+    <h3>🔐 Анализ безопасности</h3>
+    <p style="color:#94a3b8">Анализ почты на фишинг, базовая защита инфраструктуры.</p>
+  </div>
+</div>
+</section>
+
+<section>
+<div class="container reveal">
+<h2 class="section-title">Технологии</h2>
+<div class="tech">
+<span>Python</span><span>C/C++</span><span>CI/CD</span>
+<span>React</span><span>FastAPI</span><span>Docker</span>
+<span>Kubernetes</span><span>Nginx</span><span>PostgreSQL</span>
+</div>
+</div>
+</section>
+
+<section id="cases">
+<div class="container reveal">
+<h2 class="section-title">Наши кейсы</h2>
+
+<div class="slider">
+
+<div class="project" data-project="vlru">
+<img src="images/projects/vlru/vlru-1.png">
+<div class="project-content"><h3>Afisha VL.ru</h3></div>
+</div>
+
+<div class="project" data-project="desertika">
+<img src="images/projects/desertika/desertika-1.png">
+<div class="project-content"><h3>Desertika</h3></div>
+</div>
+
+<div class="project" data-project="labphys">
+<img src="images/projects/labphys/labphys-1.png">
+<div class="project-content"><h3>LabPhys</h3></div>
+</div>
+
+<div class="project" data-project="farpost">
+<img src="images/projects/farpost/farpost-1.png">
+<div class="project-content"><h3>FarServiceHub</h3></div>
+</div>
+
+<div class="project" data-project="valentine">
+<img src="images/projects/valentine/valentine-1.png">
+<div class="project-content"><h3>Valentine</h3></div>
+</div>
+
+<div class="project" data-project="phishing">
+<img src="images/projects/phishing/phishing-1.png">
+<div class="project-content"><h3>MailGuard</h3></div>
+</div>
+
+</div>
+</div>
+</section>
+
+<section id="contacts">
+<div class="container reveal">
+<h2 class="section-title">Контакты</h2>
+
+<div class="grid">
+<div class="member">
+<img src="images/kitty.jpg">
+<h4>Влада Борисова</h4>
+<p>TeamLead • DevOps • FrontEnd</p>
+<a href="https://t.me/turb0kotiki?direct" target="_blank">@turbokotiki</a>
+</div>
+
+<div class="member">
+<img src="images/cat.jpg">
+<h4>Данил Дегтярев</h4>
+<p>FullStack • iOS • BackEnd</p>
+<a href="https://vk.com/club236384548" target="_blank">vk.com/turbokotiki</a>
+</div>
+</div>
+</div>
+</section>
+
+<footer class="footer">
+<div class="container footer-grid">
+<div>
+<div class="footer-title">Разделы</div>
+<a href="#about">О нас</a>
+<a href="#services">Услуги</a>
+<a href="#cases">Кейсы</a>
+</div>
+
+<div>
+<div class="footer-title">Услуги</div>
+<a>Разработка сайтов</a>
+<a>DevOps</a>
+<a>Поддержка</a>
+</div>
+
+<div>
+<div class="footer-title">Контакты</div>
+<a href="mailto:dunyavlada@mail.ru" target="_blank">dunyavlada@mail.ru</a>
+<a href="https://t.me/turb0kotiki?direct" target="_blank">@turbokotiki</a>
+<a href="https://vk.com/club236384548" target="_blank">vk.com/turbokotiki</a>
+</div>
+</div>
+
+<div class="container footer-copyright">
+  © 2023 - 2026 Turbokotiki. All rights reserved.
+</div>
+</footer>
+
+<div id="galleryModal" class="modal">
+<span class="modal-close">&times;</span>
+<img class="modal-img" id="modalImage">
+<div class="modal-nav modal-prev">&#10094;</div>
+<div class="modal-nav modal-next">&#10095;</div>
+</div>
+
+<script>
+burger.onclick=()=>menu.classList.toggle("active");
+
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("active")});
+});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+const projects={
+vlru:["images/projects/vlru/vlru-1.png","images/projects/vlru/vlru-2.png",
+"images/projects/vlru/vlru-3.png","images/projects/vlru/vlru-4.png",
+"images/projects/vlru/vlru-5.png","images/projects/vlru/vlru-6.png",
+"images/projects/vlru/vlru-7.png"],
+desertika:["images/projects/desertika/desertika-1.png","images/projects/desertika/desertika-2.png",
+"images/projects/desertika/desertika-3.png","images/projects/desertika/desertika-4.png",
+"images/projects/desertika/desertika-5.png","images/projects/desertika/desertika-6.png",
+"images/projects/desertika/desertika-7.png","images/projects/desertika/desertika-8.png",
+"images/projects/desertika/desertika-9.png","images/projects/desertika/desertika-10.png",
+"images/projects/desertika/desertika-11.png","images/projects/desertika/desertika-12.png",
+"images/projects/desertika/desertika-13.png"],
+labphys:["images/projects/labphys/labphys-1.png","images/projects/labphys/labphys-2.png",
+"images/projects/labphys/labphys-3.png","images/projects/labphys/labphys-4.png",
+"images/projects/labphys/labphys-5.png","images/projects/labphys/labphys-6.png",
+"images/projects/labphys/labphys-7.png","images/projects/labphys/labphys-8.png",
+"images/projects/labphys/labphys-9.png","images/projects/labphys/labphys-10.png",
+"images/projects/labphys/labphys-11.png","images/projects/labphys/labphys-12.png",
+"images/projects/labphys/labphys-13.png","images/projects/labphys/labphys-14.png",
+"images/projects/labphys/labphys-15.png"],
+farpost:["images/projects/farpost/farpost-1.png","images/projects/farpost/farpost-2.png",
+"images/projects/farpost/farpost-3.png","images/projects/farpost/farpost-4.png",
+"images/projects/farpost/farpost-5.png","images/projects/farpost/farpost-6.png",
+"images/projects/farpost/farpost-7.png","images/projects/farpost/farpost-8.png",
+"images/projects/farpost/farpost-9.png","images/projects/farpost/farpost-10.png"],
+phishing:["images/projects/phishing/phishing-1.png","images/projects/phishing/phishing-2.png",
+"images/projects/phishing/phishing-3.png"],
+valentine:["images/projects/valentine/valentine-1.png","images/projects/valentine/valentine-2.png"]
+};
+
+let currentImages=[],currentIndex=0;
+const modal=document.getElementById("galleryModal");
+const modalImg=document.getElementById("modalImage");
+
+document.querySelectorAll(".project").forEach(card=>{
+card.onclick=()=>{
+currentImages=projects[card.dataset.project];
+currentIndex=0;
+showImage();
+modal.style.display="flex";
+};
+});
+
+function showImage(){modalImg.src=currentImages[currentIndex];}
+
+document.querySelector(".modal-next").onclick=()=>{
+currentIndex=(currentIndex+1)%currentImages.length;showImage();
+};
+document.querySelector(".modal-prev").onclick=()=>{
+currentIndex=(currentIndex-1+currentImages.length)%currentImages.length;showImage();
+};
+
+document.querySelector(".modal-close").onclick=()=>modal.style.display="none";
+modal.onclick=e=>{if(e.target===modal)modal.style.display="none"};
+
+modalImg.onclick=()=>modalImg.classList.toggle("zoom");
+
+let startX=0;
+modalImg.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
+modalImg.addEventListener("touchend",e=>{
+let dx=e.changedTouches[0].clientX-startX;
+if(dx>50)document.querySelector(".modal-prev").click();
+if(dx<-50)document.querySelector(".modal-next").click();
+});
+</script>
+
+</body>
+</html>
